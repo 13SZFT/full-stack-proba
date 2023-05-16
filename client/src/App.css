@@ -9,3 +9,13 @@
 body {
   font-family: "Tilt Neon", cursive;
 }
+
+.diak-container {
+  margin: auto;
+  padding-bottom: 2em;
+  width: 50%;
+}
+
+.diak-container img {
+  width: 200px;
+}

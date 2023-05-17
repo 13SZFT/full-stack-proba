@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');
 
 * {
   box-sizing: border-box;
@@ -7,10 +7,23 @@
 }
 
 body {
-  font-family: "Tilt Neon", cursive;
+  font-family: 'Tilt Neon', cursive;
 }
 
-.diak-container {
+.navbar-container {
+  background-color: royalblue;
+  display: flex;
+  gap: 2em;
+  padding: 1em 2em;
+}
+
+.navbar-container a {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.diak-container,
+.univerzalis-container {
   margin: auto;
   padding-bottom: 2em;
   width: 50%;
@@ -18,4 +31,22 @@ body {
 
 .diak-container img {
   width: 200px;
+}
+
+.diak-container a,
+.univerzalis-container a {
+  color: teal;
+  text-decoration: none;
+}
+
+.univerzalis-container table {
+  border: 1px solid black;
+}
+
+.univerzalis-container table td {
+  border: 1px solid black;
+}
+
+.univerzalis-container table td input {
+  border: none;
 }

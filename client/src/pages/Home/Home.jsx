@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const Home = () => {
-  const [szoveg, setSzoveg] = useState("");
+  const [szoveg, setSzoveg] = useState('');
 
   useEffect(() => {
     const data = async () => {
       try {
-        const adat = await fetch("http://localhost:3500");
+        const adat = await fetch('http://localhost:3500');
 
         if (adat.ok) {
           const jsonData = await adat.json();
@@ -25,7 +25,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="diak-container">
       <p>Ez a szöveg tartalma: {szoveg}</p>
     </div>
   );

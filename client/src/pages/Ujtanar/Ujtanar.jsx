@@ -1,14 +1,30 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const Ujtanar = () => {
-  const [nev, setNev] = useState('');
+  const [nev, setNev] = useState("");
   const [kor, setKor] = useState(0);
-  const [szemszin, setSzemszin] = useState('');
-  const [telefonszam, setTelefonszam] = useState('');
-  const [email, setEmail] = useState('');
-  const [kep, setKep] = useState('');
+  const [szemszin, setSzemszin] = useState("");
+  const [telefonszam, setTelefonszam] = useState("");
+  const [email, setEmail] = useState("");
+  const [kep, setKep] = useState("");
 
-  const feldolgoz = () => {};
+  const feldolgoz = (e) => {
+    e.preventDefault();
+    const adatok = { nev, kor, szemszin, telefonszam, email, kep };
+
+    const elkuld = async () => {
+      const adat = await fetch("http://localhost:3500/tanarok", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(adatok),
+      });
+    };
+
+    elkuld();
+  };
+
   return (
     <div className="univerzalis-container">
       <form>
@@ -94,7 +110,7 @@ const Ujtanar = () => {
             </tr>
             <tr>
               <td>
-                <button onClick={feldolgoz()}>Feldolgoz</button>
+                <button onClick={(event) => feldolgoz(event)}>Feldolgoz</button>
               </td>
               <td></td>
             </tr>

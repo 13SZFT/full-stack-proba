@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Ujtanar = () => {
   const [nev, setNev] = useState("");
@@ -7,6 +8,8 @@ const Ujtanar = () => {
   const [telefonszam, setTelefonszam] = useState("");
   const [email, setEmail] = useState("");
   const [kep, setKep] = useState("");
+
+  const navigate = useNavigate();
 
   const feldolgoz = (e) => {
     e.preventDefault();
@@ -20,6 +23,15 @@ const Ujtanar = () => {
         },
         body: JSON.stringify(adatok),
       });
+
+      if (adat.ok) {
+        const response = await adat.json();
+        window.alert(response.msg);
+        navigate("/teacher");
+      } else {
+        const response = await adat.json();
+        window.alert(response.msg);
+      }
     };
 
     elkuld();

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Tanar = () => {
   const [tanar, setTanar] = useState({});
@@ -9,14 +9,12 @@ const Tanar = () => {
   useEffect(() => {
     const data = async () => {
       try {
-        const adat = await fetch('http://localhost:3500/tanarok');
+        const adat = await fetch("http://localhost:3500/tanarok");
 
         if (adat.ok) {
           const jsonData = await adat.json();
           console.log(jsonData);
-          let tanarVal = jsonData.msg.filter(
-            (elem, index) => index === +param.id
-          );
+          let tanarVal = jsonData.msg.filter((elem) => elem._id === param.id);
           console.log(tanarVal);
           setTanar(tanarVal[0]);
         } else {

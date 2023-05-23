@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link, json } from "react-router-dom";
 
 const Teacher = () => {
   const [tanarok, setTanarok] = useState([]);
@@ -7,7 +7,7 @@ const Teacher = () => {
   useEffect(() => {
     const data = async () => {
       try {
-        const adat = await fetch('http://localhost:3500/tanarok');
+        const adat = await fetch("http://localhost:3500/tanarok");
 
         if (adat.ok) {
           const jsonData = await adat.json();
@@ -24,20 +24,35 @@ const Teacher = () => {
     data();
   }, []);
 
+  const torol = (id) => {
+    const tanarTorol = async () => {
+      const toroltTanar = await fetch("http://localhost:3500/tanarok", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+    };
+
+    tanarTorol();
+  };
+
   return (
     <div className="univerzalis-container">
       <Link to="/tanarfelvetel">Új tanár felvétele:</Link>
-      {tanarok.map((tanar, index) => (
-        <div className="diak-container" key={index}>
+      {tanarok.map((tanar) => (
+        <div className="diak-container" key={tanar._id}>
           <Link
             to={{
-              pathname: '/tanar/' + index,
+              pathname: "/tanar/" + tanar._id,
             }}
           >
             <h1>Tanár neve: {tanar.nev}</h1>
           </Link>
           <p>Kor: {tanar.kor}</p>
           <img src={tanar.kep} alt="kép" />
+          <button onClick={torol(tanar._id)}>Töröl</button>
         </div>
       ))}
     </div>

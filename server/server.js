@@ -53,6 +53,7 @@ app.post("/tanarok", async (req, res) => {
     });
     console.log(ujTanar);
     await ujTanar.save();
+    res.status(201).json({ msg: "Sikeres tanár létrehozás!" });
   } catch (error) {
     res.status(500).json({ msg: "Valami hiba történt!" });
   }

@@ -59,6 +59,18 @@ app.post("/tanarok", async (req, res) => {
   }
 });
 
+app.delete("/tanarok", async (req, res) => {
+  try {
+    const body = req.body;
+    console.log(body);
+    const toroltTanar = await Teacher.findOneAndDelete({ _id: body.id });
+    console.log(toroltTanar);
+    res.status(200).json({ msg: "Sikeres tanár törlés!" });
+  } catch (error) {
+    res.status(500).json({ msg: "Valami hiba történt!" });
+  }
+});
+
 // Adatbázis csatlakozás
 mongoose
   .connect(process.env.MONGO_URI)

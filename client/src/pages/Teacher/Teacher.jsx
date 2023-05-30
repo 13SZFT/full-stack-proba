@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, json } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Teacher = () => {
   const [tanarok, setTanarok] = useState([]);
@@ -25,14 +25,29 @@ const Teacher = () => {
   }, []);
 
   const torol = (id) => {
+    console.log(id);
     const tanarTorol = async () => {
-      const toroltTanar = await fetch("http://localhost:3500/tanarok", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
+      try {
+        const toroltTanar = await fetch("http://localhost:3500/tanarok", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id }),
+        });
+
+        if (toroltTanar.ok) {
+          const modositottTanarok = tanarok.filter((item) => item._id != id);
+          setTanarok(modositottTanarok);
+          const jsonData = await toroltTanar.json();
+          window.alert(jsonData.msg);
+        } else {
+          const jsonData = await toroltTanar.json();
+          console.log(jsonData);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
     };
 
     tanarTorol();
@@ -52,7 +67,7 @@ const Teacher = () => {
           </Link>
           <p>Kor: {tanar.kor}</p>
           <img src={tanar.kep} alt="kép" />
-          <button onClick={torol(tanar._id)}>Töröl</button>
+          <button onClick={() => torol(tanar._id)}>Töröl</button>
         </div>
       ))}
     </div>

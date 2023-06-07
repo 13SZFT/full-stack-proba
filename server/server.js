@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const User = require('./models/user');
 const Teacher = require('./models/teacher');
 const { diakok } = require('./adatok');
 
@@ -14,9 +16,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // routes
-app.get('/', (req, res) => {
+app.post('/', async (req, res) => {
   try {
-    res.status(200).json({ msg: 'Ez a válasz a kérésedre! Dejó!' });
+    const { nev, jelszo } = req.body;
+    const hashedJelszo = await bcrypt.hash(jelszo, 10);
+    const newUser = new User({ nev, jelszo: hashedJelszo });
+    await newUser.save();
+    res.status(200).json({ msg: 'Sikeres regisztráció!' });
+  } catch (error) {
+    res.status(500).json({ msg: 'Valami hiba történt!' });
+  }
+});
+
+app.post('/user', async (req, res) => {
+  try {
+    const { nev, jelszo } = req.body;
+
+    const felhasznalo = await User.findOne({ nev });
+
+    bcrypt
+      .compare(jelszo, felhasznalo.jelszo)
+      .then(() => {
+        res.status(200).json({ msg: 'Sikeres belépés!' });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   } catch (error) {
     res.status(500).json({ msg: 'Valami hiba történt!' });
   }

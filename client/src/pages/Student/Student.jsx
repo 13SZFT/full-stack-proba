@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Student = () => {
   const [diakok, setDiakok] = useState([]);
@@ -7,7 +7,7 @@ const Student = () => {
   useEffect(() => {
     const data = async () => {
       try {
-        const adat = await fetch('http://localhost:3500/diakok');
+        const adat = await fetch("http://localhost:3500/diakok");
 
         if (adat.ok) {
           const jsonData = await adat.json();
@@ -25,12 +25,12 @@ const Student = () => {
   }, []);
 
   return (
-    <div>
+    <div className="diak-container">
       {diakok.map((diak, index) => (
-        <div className="diak-container" key={index}>
+        <div key={index}>
           <Link
             to={{
-              pathname: '/diak/' + index,
+              pathname: "/diak/" + index,
             }}
           >
             <h1>Diák neve: {diak.nev}</h1>

@@ -37,7 +37,7 @@ const Teacher = () => {
         });
 
         if (toroltTanar.ok) {
-          const modositottTanarok = tanarok.filter((item) => item._id != id);
+          const modositottTanarok = tanarok.filter((item) => item._id !== id);
           setTanarok(modositottTanarok);
           const jsonData = await toroltTanar.json();
           window.alert(jsonData.msg);
@@ -56,20 +56,22 @@ const Teacher = () => {
   return (
     <div className="univerzalis-container">
       <Link to="/tanarfelvetel">Új tanár felvétele:</Link>
-      {tanarok.map((tanar) => (
-        <div className="diak-container" key={tanar._id}>
-          <Link
-            to={{
-              pathname: "/tanar/" + tanar._id,
-            }}
-          >
-            <h1>Tanár neve: {tanar.nev}</h1>
-          </Link>
-          <p>Kor: {tanar.kor}</p>
-          <img src={tanar.kep} alt="kép" />
-          <button onClick={() => torol(tanar._id)}>Töröl</button>
-        </div>
-      ))}
+      <div className="tanar-container">
+        {tanarok.map((tanar) => (
+          <div key={tanar._id}>
+            <Link
+              to={{
+                pathname: "/tanar/" + tanar._id,
+              }}
+            >
+              <h1>Tanár neve: {tanar.nev}</h1>
+            </Link>
+            <p>Kor: {tanar.kor}</p>
+            <img src={tanar.kep} alt="kép" />
+            <button onClick={() => torol(tanar._id)}>Töröl</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

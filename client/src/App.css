@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap");
 
 * {
   box-sizing: border-box;
@@ -7,7 +7,11 @@
 }
 
 body {
-  font-family: 'Tilt Neon', cursive;
+  font-family: "Tilt Neon", cursive;
+  /* background-image: url("../public/bg.jpg"); */
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .navbar-container {
@@ -15,6 +19,13 @@ body {
   display: flex;
   gap: 2em;
   padding: 1em 2em;
+}
+
+.diak-container,
+.tanar-container {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  gap: 2em;
 }
 
 .navbar-container a {
@@ -29,8 +40,11 @@ body {
   width: 50%;
 }
 
-.diak-container img {
-  width: 200px;
+.diak-container img,
+.tanar-container img {
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
 }
 
 .diak-container a,

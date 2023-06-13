@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Teacher = () => {
   const [tanarok, setTanarok] = useState([]);
@@ -7,7 +7,7 @@ const Teacher = () => {
   useEffect(() => {
     const data = async () => {
       try {
-        const adat = await fetch('http://localhost:3500/tanarok');
+        const adat = await fetch("http://localhost:3500/tanarok");
 
         if (adat.ok) {
           const jsonData = await adat.json();
@@ -28,10 +28,10 @@ const Teacher = () => {
     console.log(id);
     const tanarTorol = async () => {
       try {
-        const toroltTanar = await fetch('http://localhost:3500/tanarok', {
-          method: 'DELETE',
+        const toroltTanar = await fetch("http://localhost:3500/tanarok", {
+          method: "DELETE",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ id }),
         });
@@ -56,7 +56,6 @@ const Teacher = () => {
   return (
     <div className="univerzalis-container">
       <Link to="/tanarfelvetel">Új tanár felvétele:</Link>
-<<<<<<< HEAD
       <div className="tanar-container">
         {tanarok.map((tanar) => (
           <div key={tanar._id}>
@@ -73,27 +72,6 @@ const Teacher = () => {
           </div>
         ))}
       </div>
-=======
-      {tanarok.map((tanar) => (
-        <div className="diak-container" key={tanar._id}>
-          <Link
-            to={{
-              pathname: '/tanar/' + tanar._id,
-            }}>
-            <h1>Tanár neve: {tanar.nev}</h1>
-          </Link>
-          <p>Kor: {tanar.kor}</p>
-          <img src={tanar.kep} alt="kép" />
-          <button onClick={() => torol(tanar._id)}>Töröl</button>
-          <Link
-            to={{
-              pathname: '/tanarmodosito/' + tanar._id,
-            }}>
-            <h1>Módosít</h1>
-          </Link>
-        </div>
-      ))}
->>>>>>> a5367075296d934fc7a07d3c1eff436f9dd4be6c
     </div>
   );
 };

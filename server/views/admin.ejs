@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      h1 {
+        font-family: consolas;
+      }
+      ul {
+        font-family: consolas;
+        list-style-type: none;
+      }
+
+      li > p {
+        background-color: teal;
+        box-shadow: 3px 3px 3px black;
+        border-radius: 10px;
+        color: white;
+        margin-bottom: 5px;
+        padding: 1em;
+        width: max(600px, 80%);
+      }
+
+      li > p:last-of-type {
+        background-color: whitesmoke;
+        width: 200px;
+      }
+
+      li > p:last-of-type > button {
+        background-color: whitesmoke;
+        border: none;
+        width: 200px;
+      }
+    </style>
+    <title>Admin</title>
+  </head>
+  <body>
+    <h1>Felhasználók</h1>
+    <ul>
+      <% users.forEach(element => { %>
+      <li>
+        <p>Név: <%= element.nev %></p>
+        <p>Jelszó: <%= element.jelszo %></p>
+        <% if (element.isAdmin) { %>
+        <p>Admin-e: igen</p>
+        <p><button>Admin megváltozat</button></p>
+
+        <% } else { %>
+        <p>Admin-e: nem</p>
+        <p><button>Admin megváltozat</button></p>
+        <br />
+      </li>
+
+      <% } %> <% }) %>
+    </ul>
+  </body>
+</html>

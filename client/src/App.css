@@ -64,3 +64,9 @@ body {
 .univerzalis-container table td input {
   border: none;
 }
+
+.link-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+}

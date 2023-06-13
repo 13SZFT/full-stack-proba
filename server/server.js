@@ -1,10 +1,12 @@
-require("dotenv").config();
-const express = require("express");
+require('dotenv').config();
+const express = require('express');
 const app = express();
-const cors = require("cors");
-const mongoose = require("mongoose");
-const Teacher = require("./models/teacher");
-const { diakok, tanarok } = require("./adatok");
+const cors = require('cors');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const User = require('./models/user');
+const Teacher = require('./models/teacher');
+const { diakok } = require('./adatok');
 
 const PORT = process.env.PORT || 3500;
 
@@ -14,32 +16,55 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // routes
-app.get("/", (req, res) => {
+app.post('/', async (req, res) => {
   try {
-    res.status(200).json({ msg: "Ez a válasz a kérésedre! Dejó!" });
+    const { nev, jelszo } = req.body;
+    const hashedJelszo = await bcrypt.hash(jelszo, 10);
+    const newUser = new User({ nev, jelszo: hashedJelszo });
+    await newUser.save();
+    res.status(200).json({ msg: 'Sikeres regisztráció!' });
   } catch (error) {
-    res.status(500).json({ msg: "Valami hiba történt!" });
+    res.status(500).json({ msg: 'Valami hiba történt!' });
   }
 });
 
-app.get("/diakok", (req, res) => {
+app.post('/user', async (req, res) => {
+  try {
+    const { nev, jelszo } = req.body;
+
+    const felhasznalo = await User.findOne({ nev });
+
+    bcrypt
+      .compare(jelszo, felhasznalo.jelszo)
+      .then(() => {
+        res.status(200).json({ msg: 'Sikeres belépés!' });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  } catch (error) {
+    res.status(500).json({ msg: 'Valami hiba történt!' });
+  }
+});
+
+app.get('/diakok', (req, res) => {
   try {
     res.status(200).json({ msg: diakok });
   } catch (error) {
-    res.status(500).json({ msg: "Valami hiba történt!" });
+    res.status(500).json({ msg: 'Valami hiba történt!' });
   }
 });
 
-app.get("/tanarok", async (req, res) => {
+app.get('/tanarok', async (req, res) => {
   try {
     const tanarok = await Teacher.find({});
     res.status(200).json({ msg: tanarok });
   } catch (error) {
-    res.status(500).json({ msg: "Valami hiba történt!" });
+    res.status(500).json({ msg: 'Valami hiba történt!' });
   }
 });
 
-app.post("/tanarok", async (req, res) => {
+app.post('/tanarok', async (req, res) => {
   try {
     const { nev, kor, szemszin, telefonszam, email, kep } = req.body;
     console.log(req.body);
@@ -53,28 +78,54 @@ app.post("/tanarok", async (req, res) => {
     });
     console.log(ujTanar);
     await ujTanar.save();
-    res.status(201).json({ msg: "Sikeres tanár létrehozás!" });
+    res.status(201).json({ msg: 'Sikeres tanár létrehozás!' });
   } catch (error) {
-    res.status(500).json({ msg: "Valami hiba történt!" });
+    res.status(500).json({ msg: 'Valami hiba történt!' });
   }
 });
 
-app.delete("/tanarok", async (req, res) => {
+app.put('/tanarok', async (req, res) => {
+  try {
+    const { paramId, nev, kor, szemszin, telefonszam, email, kep } = req.body;
+    console.log(req.body);
+    await Teacher.findOneAndUpdate(
+      { _id: paramId },
+      {
+        nev: nev,
+        kor: kor,
+        szemszin: szemszin,
+        telefonszam: telefonszam,
+        email: email,
+        kep: kep,
+      }
+    );
+    res.status(201).json({ msg: 'Sikeres tanár módosítás!' });
+  } catch (error) {
+    res.status(500).json({ msg: 'Valami hiba történt a módosításkor!' });
+  }
+});
+
+app.delete('/tanarok', async (req, res) => {
   try {
     const body = req.body;
     // console.log(body);
     const toroltTanar = await Teacher.findOneAndDelete({ _id: body.id });
+<<<<<<< HEAD
     // console.log(toroltTanar);
     res.status(200).json({ msg: "Sikeres tanár törlés!" });
+=======
+    console.log(toroltTanar);
+    res.status(200).json({ msg: 'Sikeres tanár törlés!' });
+>>>>>>> a5367075296d934fc7a07d3c1eff436f9dd4be6c
   } catch (error) {
-    res.status(500).json({ msg: "Valami hiba történt!" });
+    res.status(500).json({ msg: 'Valami hiba történt!' });
   }
 });
 
 // Adatbázis csatlakozás
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("Sikeres adatbázis csatlakozás!"))
+  .then(() => console.log('Sikeres adatbázis csatlakozás!'))
   .catch((error) => console.log(error.message));
 
 app.listen(PORT, () => {

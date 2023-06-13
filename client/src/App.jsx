@@ -8,6 +8,8 @@ import Diak from './pages/Diak/Diak';
 import Teacher from './pages/Teacher/Teacher';
 import Tanar from './pages/Tanar/Tanar';
 import Ujtanar from './pages/Ujtanar/Ujtanar';
+import TanarModosito from './pages/TanarModosito/TanarModosito';
+import Login from './pages/Login/Login';
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
           <Route path="/diak/:id" element={<Diak />} />
           <Route path="/tanar/:id" element={<Tanar />} />
           <Route path="/tanarfelvetel" element={<Ujtanar />} />
+          <Route path="/tanarmodosito/:id" element={<TanarModosito />} />
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
